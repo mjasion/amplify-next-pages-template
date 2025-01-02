@@ -26,7 +26,7 @@ export default function App() {
 
   function createTodo() {
     client.models.Todo.create({
-      content: window.prompt("Add todo"),
+      content: window.prompt("Add todo task"),
     });
   }
 
