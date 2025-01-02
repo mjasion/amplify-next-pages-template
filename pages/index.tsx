@@ -12,14 +12,17 @@ export default function App() {
     }
 
   function listTodos() {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
+    const sub = client.models.Todo.observeQuery().subscribe({
+      next: ({ items, isSynced }) => {
+        setTodos([...items]);
+      },
     });
+    return () => sub.unsubscribe();
   }
 
-  useEffect(() => {
-    listTodos();
-  }, []);
+    useEffect(() => {
+       listTodos();
+    }, []);
 
   function createTodo() {
     client.models.Todo.create({
